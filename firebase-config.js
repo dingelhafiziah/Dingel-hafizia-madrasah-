@@ -7,12 +7,12 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebas
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBMQ_BroxckOFgMyxafSIoSEQKDLgs-Gxo",
+  apiKey: "AIzaSyBMQ_Broxck0FgMyxaf5IoSE0KDlgs-Gxo",
   authDomain: "dingel-hafizia-web-app.firebaseapp.com",
   projectId: "dingel-hafizia-web-app",
   storageBucket: "dingel-hafizia-web-app.firebasestorage.app",
   messagingSenderId: "628673453299",
-  appId: "1:628673453299:web:41a55fb9d2d374ccd036b86",
+  appId: "1:628673453299:web:41a55fb9d2d374cd036b86",
   measurementId: "G-C0HLEQ6R3G"
 };
 
