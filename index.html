@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0b6b4f">
+  <meta name="theme-color" content="#0b766c">
   <meta name="description" content="Dingel Hafizia Madrasa Management App">
-  <title>Dingel Hafizia Madrasa</title>
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="style.css">
+  <title>Dingel Hafizia Madrasa</title>
 </head>
 <body>
   <section id="loginScreen" class="login-screen">
     <div class="login-card">
-      <div class="brand-mark">DH</div>
+      <div class="profile-avatar" style="margin:0 auto 16px">DH</div>
       <h1>ডিঙ্গেল হাফিজিয়া মাদ্রাসা</h1>
       <p>Dingel Hafizia Madrasa</p>
       <form id="loginForm" autocomplete="on">
@@ -23,57 +24,45 @@
           <label for="passwordInput">Password</label>
           <input id="passwordInput" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required>
         </div>
-        <p id="loginError" class="form-error" aria-live="polite"></p>
-        <button class="btn primary full-width" type="submit">Login</button>
+        <p id="loginError" class="error-text" aria-live="polite"></p>
+        <button class="btn primary full" type="submit">Login</button>
       </form>
     </div>
   </section>
 
-  <div id="app" class="app-shell hidden">
+  <div id="app" class="app hidden">
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
     <aside id="sidebar" class="sidebar">
-      <div class="sidebar-brand">
-        <div class="brand-mark small">DH</div>
-        <div>
-          <strong>Dingel Hafizia</strong>
-          <span>Madrasa ERP</span>
-        </div>
+      <div class="brand">
+        <div class="profile-avatar" style="width:48px;height:48px;flex:none">DH</div>
+        <div><b>Dingel Hafizia</b><small>Madrasa ERP</small></div>
       </div>
-      <nav id="nav" class="main-nav" aria-label="Main navigation"></nav>
-      <div class="sidebar-footer">
-        <button id="logoutBtn" class="btn danger full-width" type="button">Logout</button>
+      <nav id="nav" aria-label="Main navigation"></nav>
+      <div class="sidebar-bottom">
+        <button id="logoutBtn" class="btn danger full" type="button">Logout</button>
       </div>
     </aside>
 
-    <main class="main-content">
+    <main class="main">
       <header class="topbar">
-        <div class="topbar-left">
+        <div style="display:flex;align-items:center;gap:10px">
           <button id="menuBtn" class="icon-btn mobile-only" type="button" aria-label="Open menu">☰</button>
-          <div>
-            <h1 id="pageTitle">Dashboard</h1>
-            <p id="pageSubtitle">মাদ্রাসার সামগ্রিক তথ্য</p>
-          </div>
+          <div><h2 id="pageTitle">Dashboard</h2><p id="pageSubtitle">মাদ্রাসার সামগ্রিক তথ্য</p></div>
         </div>
-        <div class="topbar-actions">
+        <div class="top-actions">
           <button id="refreshBtn" class="btn secondary" type="button">↻ Refresh</button>
           <button id="printBtn" class="btn outline" type="button">⎙ Print</button>
         </div>
       </header>
-      <section id="view" class="page-view" aria-live="polite"></section>
-      <footer class="app-footer">
-        <span>© <span id="footerYear"></span> Dingel Hafizia Madrasa</span>
-        <span>Professional Madrasa Management System</span>
-      </footer>
+      <section id="view" aria-live="polite"></section>
     </main>
   </div>
 
   <div id="modalRoot"></div>
-  <div id="toastRoot" class="toast-root" aria-live="polite"></div>
-
+  <div id="toastRoot"></div>
   <script type="module" src="firebase-config.js"></script>
   <script type="module" src="auth.js"></script>
   <script type="module" src="firestore.js"></script>
   <script type="module" src="app.js"></script>
-  <script>document.getElementById("footerYear").textContent = new Date().getFullYear();</script>
 </body>
 </html>
