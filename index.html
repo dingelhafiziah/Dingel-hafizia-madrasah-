@@ -6,11 +6,11 @@
 <meta name="theme-color" content="#0b766c">
 <meta name="color-scheme" content="light">
 <meta name="description" content="Dingel Hafizia Madrasa Management App">
-<link rel="manifest" href="manifest.json?v=20260902v6">
-<link rel="stylesheet" href="style.css?v=20260902v6">
-<link rel="stylesheet" href="students.css?v=20260902v6">
-<link rel="stylesheet" href="light-fix.css?v=20260902v6">
-<link rel="stylesheet" href="fee-management-v2.css?v=20260902v6">
+<link rel="manifest" href="manifest.json?v=20260902v7">
+<link rel="stylesheet" href="style.css?v=20260902v7">
+<link rel="stylesheet" href="students.css?v=20260902v7">
+<link rel="stylesheet" href="light-fix.css?v=20260902v7">
+<link rel="stylesheet" href="fee-management-v2.css?v=20260902v7">
 <title>Dingel Hafizia Madrasa</title>
 </head>
 <body>
@@ -42,17 +42,31 @@
 <div id="modalRoot"></div><div id="toastRoot"></div><span id="footerYear" hidden></span>
 <script>
 (function(){
-try{if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){r.unregister();});});}}catch(e){}
-window.addEventListener('error',function(e){var x=document.getElementById('loginError');if(x&&!x.textContent)x.textContent='Application startup error: '+(e.message||'Unknown error');});
-window.addEventListener('unhandledrejection',function(e){var x=document.getElementById('loginError');if(x&&!x.textContent)x.textContent='Application startup error. Please reload.';});
+  var KEY='dh-sw-cleaned-v7';
+  function showError(msg){var x=document.getElementById('loginError');if(x&&!x.textContent)x.textContent='Application startup error: '+msg;}
+  window.addEventListener('error',function(e){showError(e.message||'Unknown error');});
+  window.addEventListener('unhandledrejection',function(e){showError(e.reason?.message||'Unhandled promise error');});
+  try{
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.getRegistrations().then(async function(rs){
+        if(!rs.length)return;
+        await Promise.all(rs.map(function(r){return r.unregister();}));
+        if(window.caches){var keys=await caches.keys();await Promise.all(keys.map(function(k){return caches.delete(k);}));}
+        if(!sessionStorage.getItem(KEY)){
+          sessionStorage.setItem(KEY,'1');
+          location.reload();
+        }
+      }).catch(function(e){console.warn('Service worker cleanup failed',e);});
+    }
+  }catch(e){console.warn('Service worker cleanup unavailable',e);}
 })();
 </script>
-<script type="module" src="firebase-config.js?v=20260902v6"></script>
-<script type="module" src="auth.js?v=20260902v6"></script>
-<script type="module" src="firestore.js?v=20260902v6"></script>
-<script type="module" src="app.js?v=20260902v6"></script>
-<script type="module" src="students-view.js?v=20260902v6"></script>
-<script type="module" src="rename-students-details.js?v=20260902v6"></script>
-<script type="module" src="fee-management-v2.js?v=20260902v6"></script>
+<script type="module" src="firebase-config.js?v=20260902v7"></script>
+<script type="module" src="auth.js?v=20260902v7"></script>
+<script type="module" src="firestore.js?v=20260902v7"></script>
+<script type="module" src="app.js?v=20260902v7"></script>
+<script type="module" src="students-view.js?v=20260902v7"></script>
+<script type="module" src="rename-students-details.js?v=20260902v7"></script>
+<script type="module" src="fee-management-v2.js?v=20260902v7"></script>
 </body>
 </html>
