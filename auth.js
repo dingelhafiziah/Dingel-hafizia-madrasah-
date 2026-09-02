@@ -1,5 +1,5 @@
 import { auth } from "./firebase-config.js";
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const loginScreen = document.getElementById("loginScreen");
 const appRoot = document.getElementById("app");
@@ -16,9 +16,6 @@ function showError(message) {
 
 function setLoggedIn(user) {
   if (user) {
-    // Keep the login screen visible until app.js confirms that the application
-    // shell has initialized. This prevents a module/runtime error from leaving
-    // GitHub Pages on a completely blank screen.
     window.dispatchEvent(new CustomEvent("dh:auth", { detail: user }));
   } else {
     loginScreen?.classList.remove("hidden");
@@ -53,6 +50,7 @@ form?.addEventListener("submit", async (event) => {
   showError("");
 
   try {
+    await setPersistence(auth, browserLocalPersistence);
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     console.error("Firebase login error:", error);
@@ -67,6 +65,13 @@ document.getElementById("logoutBtn")?.addEventListener("click", async () => {
   catch (error) { console.error("Firebase logout error:", error); }
 });
 
-onAuthStateChanged(auth, setLoggedIn);
+// Explicitly keep the Firebase session in browser local storage so a normal
+// page refresh/reopen does not require the user to log in again.
+setPersistence(auth, browserLocalPersistence)
+  .then(() => onAuthStateChanged(auth, setLoggedIn))
+  .catch((error) => {
+    console.error("Firebase auth persistence error:", error);
+    onAuthStateChanged(auth, setLoggedIn);
+  });
 
 export { auth };
