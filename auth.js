@@ -14,14 +14,21 @@ function showError(message) {
   loginError.className = "error-text";
 }
 
+function finishAuthScreen(){
+  document.body.classList.remove("auth-loading");
+}
+
 function setLoggedIn(user) {
   if (user) {
+    loginScreen?.classList.add("hidden");
+    appRoot?.classList.remove("hidden");
     window.dispatchEvent(new CustomEvent("dh:auth", { detail: user }));
   } else {
     loginScreen?.classList.remove("hidden");
     appRoot?.classList.add("hidden");
     window.dispatchEvent(new CustomEvent("dh:logout"));
   }
+  finishAuthScreen();
 }
 
 function firebaseLoginMessage(error) {
@@ -65,8 +72,6 @@ document.getElementById("logoutBtn")?.addEventListener("click", async () => {
   catch (error) { console.error("Firebase logout error:", error); }
 });
 
-// Explicitly keep the Firebase session in browser local storage so a normal
-// page refresh/reopen does not require the user to log in again.
 setPersistence(auth, browserLocalPersistence)
   .then(() => onAuthStateChanged(auth, setLoggedIn))
   .catch((error) => {
