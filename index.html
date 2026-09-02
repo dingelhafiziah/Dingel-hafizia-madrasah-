@@ -6,23 +6,43 @@
   <meta name="theme-color" content="#0b766c">
   <meta name="color-scheme" content="light">
   <meta name="description" content="Dingel Hafizia Madrasa Management App">
-  <link rel="manifest" href="manifest.json?v=20260902v2">
-  <link rel="stylesheet" href="style.css?v=20260902v2">
-  <link rel="stylesheet" href="students.css?v=20260902v2">
-  <link rel="stylesheet" href="light-fix.css?v=20260902v2">
-  <link rel="stylesheet" href="fee-management-v2.css?v=20260902v2">
+  <link rel="manifest" href="manifest.json?v=20260902v3">
+  <link rel="stylesheet" href="style.css?v=20260902v3">
+  <link rel="stylesheet" href="students.css?v=20260902v3">
+  <link rel="stylesheet" href="light-fix.css?v=20260902v3">
+  <link rel="stylesheet" href="fee-management-v2.css?v=20260902v3">
   <title>Dingel Hafizia Madrasa</title>
+  <style>
+    #bootRecovery{position:fixed;inset:0;z-index:999999;display:none;place-items:center;padding:20px;background:#f5f8f7;font-family:system-ui,sans-serif}
+    #bootRecovery.show{display:grid}
+    #bootRecovery .box{width:min(460px,100%);padding:28px;border:1px solid #dfe8e5;border-radius:18px;background:#fff;box-shadow:0 20px 60px rgba(16,46,44,.12);text-align:center}
+    #bootRecovery h2{margin-bottom:8px;color:#07564f}
+    #bootRecovery p{margin:8px 0;color:#526360;font-size:14px}
+    #bootRecovery small{display:block;margin-top:12px;color:#9a6b18;word-break:break-word}
+    #bootRecovery button{margin-top:16px;min-height:44px;padding:0 18px;border:0;border-radius:10px;color:#fff;background:#0b766c;font-weight:700}
+  </style>
 </head>
 <body>
   <section id="loginScreen" class="login-screen"><div class="login-card"><div class="profile-avatar" style="margin:0 auto 16px">DH</div><h1>ডিঙ্গেল হাফিজিয়া মাদ্রাসা</h1><p>Dingel Hafizia Madrasa</p><form id="loginForm" autocomplete="on"><div class="form-group"><label for="emailInput">Email</label><input id="emailInput" name="email" type="email" placeholder="Enter email" autocomplete="username" required></div><div class="form-group"><label for="passwordInput">Password</label><input id="passwordInput" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required></div><p id="loginError" class="error-text" aria-live="polite"></p><button class="btn primary full" type="submit">Login</button></form></div></section>
   <div id="app" class="app hidden"><div id="sidebarOverlay" class="sidebar-overlay"></div><aside id="sidebar" class="sidebar"><div class="brand"><div class="profile-avatar" style="width:48px;height:48px;flex:none">DH</div><div><b>Dingel Hafizia</b><small>Madrasa ERP</small></div></div><nav id="nav" aria-label="Main navigation"></nav><div class="sidebar-bottom"><button id="logoutBtn" class="btn danger full" type="button">Logout</button></div></aside><main class="main"><header class="topbar"><div style="display:flex;align-items:center;gap:10px"><button id="menuBtn" class="icon-btn mobile-only" type="button" aria-label="Open menu">☰</button><div><h2 id="pageTitle">Dashboard</h2><p id="pageSubtitle">মাদ্রাসার সামগ্রিক তথ্য</p></div></div><div class="top-actions"><button id="refreshBtn" class="btn secondary" type="button">↻ Refresh</button><button id="printBtn" class="btn outline" type="button">⎙ Print</button></div></header><section id="view" aria-live="polite"></section></main></div>
   <div id="modalRoot"></div><div id="toastRoot"></div><span id="footerYear" hidden></span>
-  <script type="module" src="firebase-config.js?v=20260902v2"></script>
-  <script type="module" src="auth.js?v=20260902v2"></script>
-  <script type="module" src="firestore.js?v=20260902v2"></script>
-  <script type="module" src="app.js?v=20260902v2"></script>
-  <script type="module" src="students-view.js?v=20260902v2"></script>
-  <script type="module" src="rename-students-details.js?v=20260902v2"></script>
-  <script type="module" src="fee-management-v2.js?v=20260902v2"></script>
+  <div id="bootRecovery" role="alert"><div class="box"><h2>Dingel Hafizia</h2><p>অ্যাপটি চালু হতে সমস্যা হচ্ছে।</p><p>একবার Reload করুন। সমস্যা থাকলে নিচের error দেখাবে।</p><small id="bootError"></small><button type="button" onclick="location.reload()">Reload App</button></div></div>
+  <script>
+    (function(){
+      var recovery=document.getElementById('bootRecovery'), errorBox=document.getElementById('bootError');
+      function showError(message){if(errorBox)errorBox.textContent=String(message||'Unknown startup error');recovery?.classList.add('show');}
+      window.addEventListener('error',function(e){showError(e.message||'JavaScript error');});
+      window.addEventListener('unhandledrejection',function(e){showError(e.reason?.message||e.reason||'Unhandled promise error');});
+      setTimeout(function(){var login=document.getElementById('loginScreen'),app=document.getElementById('app');if(login&&app&&login.classList.contains('hidden')&&app.classList.contains('hidden'))showError('Authentication/UI initialization did not complete.');},5000);
+      window.__dhBootOK=function(){recovery?.classList.remove('show');};
+    })();
+  </script>
+  <script type="module" src="firebase-config.js?v=20260902v3"></script>
+  <script type="module" src="auth.js?v=20260902v3"></script>
+  <script type="module" src="firestore.js?v=20260902v3"></script>
+  <script type="module" src="app.js?v=20260902v3"></script>
+  <script type="module" src="students-view.js?v=20260902v3"></script>
+  <script type="module" src="rename-students-details.js?v=20260902v3"></script>
+  <script type="module" src="fee-management-v2.js?v=20260902v3"></script>
 </body>
 </html>
