@@ -2,7 +2,7 @@ import { getCollection, addDocument, updateDocument, deleteDocument } from "./fi
 import { exportData, importData } from "./data-transfer.js";
 
 const view=document.getElementById("view"),nav=document.getElementById("nav"),pageTitle=document.getElementById("pageTitle"),pageSubtitle=document.getElementById("pageSubtitle"),sidebar=document.getElementById("sidebar"),overlay=document.getElementById("sidebarOverlay");
-const pages=[["dashboard","⌂","Dashboard","মাদ্রাসার সামগ্রিক তথ্য"],["students","👨‍🎓","Students Details","শিক্ষার্থীদের বিস্তারিত তথ্য"],["fees","৳","Fees","ফি ও বকেয়া"],["income","＋","Income","মাদ্রাসার আয়"],["expenses","−","Expenses","মাদ্রাসার খরচ"],["accounts","▣","Accounts","হিসাবের সারাংশ"],["reports","▤","Reports","রিপোর্ট"],["settings","⚙","Settings","মাদ্রাসার সেটিংস"]];
+const pages=[["dashboard","⌂","Dashboard","মাদ্রাসার সামগ্রিক তথ্য"],["students","👨‍🎓","Students Details","শিক্ষার্থীদের বিস্তারিত তথ্য"],["fees","₹","Fees","ফি ও বকেয়া"],["income","＋","Income","মাদ্রাসার আয়"],["expenses","−","Expenses","মাদ্রাসার খরচ"],["accounts","▣","Accounts","হিসাবের সারাংশ"],["reports","▤","Reports","রিপোর্ট"],["settings","⚙","Settings","মাদ্রাসার সেটিংস"]];
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
 const money=v=>new Intl.NumberFormat("en-IN",{maximumFractionDigits:2}).format(Number(v)||0);
 const initials=n=>String(n||"S").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
