@@ -1,5 +1,5 @@
 import { db } from "./firebase-config.js";
-import { collection, addDoc, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { collection, addDoc, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, orderBy, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 export async function getCollection(name) {
   const snapshot = await getDocs(collection(db, name));
@@ -28,4 +28,4 @@ export async function deleteDocument(name, id) {
   await deleteDoc(doc(db, name, id));
 }
 
-export { db, collection, addDoc, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, orderBy };
+export { db, collection, addDoc, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, orderBy, where, serverTimestamp };
