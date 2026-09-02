@@ -16,8 +16,9 @@ function showError(message) {
 
 function setLoggedIn(user) {
   if (user) {
-    loginScreen?.classList.add("hidden");
-    appRoot?.classList.remove("hidden");
+    // Keep the login screen visible until app.js confirms that the application
+    // shell has initialized. This prevents a module/runtime error from leaving
+    // GitHub Pages on a completely blank screen.
     window.dispatchEvent(new CustomEvent("dh:auth", { detail: user }));
   } else {
     loginScreen?.classList.remove("hidden");
