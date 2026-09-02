@@ -6,12 +6,22 @@
 <meta name="theme-color" content="#0b766c">
 <meta name="color-scheme" content="light">
 <meta name="description" content="Dingel Hafizia Madrasa Management App">
-<link rel="manifest" href="manifest.json?v=20260902v7">
-<link rel="stylesheet" href="style.css?v=20260902v7">
-<link rel="stylesheet" href="students.css?v=20260902v7">
-<link rel="stylesheet" href="light-fix.css?v=20260902v7">
-<link rel="stylesheet" href="fee-management-v2.css?v=20260902v7">
+<link rel="manifest" href="manifest.json?v=20260902v8">
+<link rel="stylesheet" href="style.css?v=20260902v8">
+<link rel="stylesheet" href="students.css?v=20260902v8">
+<link rel="stylesheet" href="light-fix.css?v=20260902v8">
+<link rel="stylesheet" href="fee-management-v2.css?v=20260902v8">
 <title>Dingel Hafizia Madrasa</title>
+<style>
+html,body{margin:0;min-height:100%;background:#f5f8f7;color:#173330}
+#loginScreen{min-height:100vh;display:grid;place-items:center;padding:24px;box-sizing:border-box;background:linear-gradient(145deg,#edf8f5,#f8fafb)}
+#loginScreen .login-card{width:min(430px,100%);padding:34px;box-sizing:border-box;background:#fff;border:1px solid #dfe8e5;border-radius:24px;box-shadow:0 24px 70px rgba(16,46,44,.12);text-align:center;font-family:system-ui,sans-serif}
+#loginScreen input{width:100%;height:52px;box-sizing:border-box;padding:0 15px;margin:5px 0 10px;border:1px solid #dfe8e5;border-radius:11px;background:#fff}
+#loginScreen button{width:100%;height:48px;border:0;border-radius:10px;background:#0b766c;color:#fff;font-weight:700}
+#loginScreen h1{margin:0 0 6px;color:#07564f;font-size:26px}#loginScreen p{color:#71807d}
+#loginError{min-height:18px;color:#c84242;font-size:12px}
+#app.hidden{display:none!important}
+</style>
 </head>
 <body>
 <section id="loginScreen" class="login-screen">
@@ -22,7 +32,7 @@
 <form id="loginForm" autocomplete="on">
 <div class="form-group"><label for="emailInput">Email</label><input id="emailInput" name="email" type="email" placeholder="Enter email" autocomplete="username" required></div>
 <div class="form-group"><label for="passwordInput">Password</label><input id="passwordInput" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required></div>
-<p id="loginError" class="error-text" aria-live="polite"></p>
+<p id="loginError" aria-live="polite"></p>
 <button class="btn primary full" type="submit">Login</button>
 </form>
 </div>
@@ -42,31 +52,28 @@
 <div id="modalRoot"></div><div id="toastRoot"></div><span id="footerYear" hidden></span>
 <script>
 (function(){
-  var KEY='dh-sw-cleaned-v7';
   function showError(msg){var x=document.getElementById('loginError');if(x&&!x.textContent)x.textContent='Application startup error: '+msg;}
   window.addEventListener('error',function(e){showError(e.message||'Unknown error');});
-  window.addEventListener('unhandledrejection',function(e){showError(e.reason?.message||'Unhandled promise error');});
+  window.addEventListener('unhandledrejection',function(e){showError((e.reason&&e.reason.message)||'Unhandled promise error');});
+  window.addEventListener('dh:auth',function(){
+    var l=document.getElementById('loginScreen'),a=document.getElementById('app');
+    if(l&&a){l.classList.add('hidden');a.classList.remove('hidden');}
+  });
+  window.addEventListener('dh:logout',function(){
+    var l=document.getElementById('loginScreen'),a=document.getElementById('app');
+    if(l&&a){l.classList.remove('hidden');a.classList.add('hidden');}
+  });
   try{
-    if('serviceWorker' in navigator){
-      navigator.serviceWorker.getRegistrations().then(async function(rs){
-        if(!rs.length)return;
-        await Promise.all(rs.map(function(r){return r.unregister();}));
-        if(window.caches){var keys=await caches.keys();await Promise.all(keys.map(function(k){return caches.delete(k);}));}
-        if(!sessionStorage.getItem(KEY)){
-          sessionStorage.setItem(KEY,'1');
-          location.reload();
-        }
-      }).catch(function(e){console.warn('Service worker cleanup failed',e);});
-    }
-  }catch(e){console.warn('Service worker cleanup unavailable',e);}
+    if('serviceWorker' in navigator){navigator.serviceWorker.register('service-worker.js?v=20260902v8',{updateViaCache:'none'}).catch(function(e){console.warn('Legacy service-worker cleanup registration failed',e);});}
+  }catch(e){console.warn('Service-worker registration unavailable',e);}
 })();
 </script>
-<script type="module" src="firebase-config.js?v=20260902v7"></script>
-<script type="module" src="auth.js?v=20260902v7"></script>
-<script type="module" src="firestore.js?v=20260902v7"></script>
-<script type="module" src="app.js?v=20260902v7"></script>
-<script type="module" src="students-view.js?v=20260902v7"></script>
-<script type="module" src="rename-students-details.js?v=20260902v7"></script>
-<script type="module" src="fee-management-v2.js?v=20260902v7"></script>
+<script type="module" src="firebase-config.js?v=20260902v8"></script>
+<script type="module" src="auth.js?v=20260902v8"></script>
+<script type="module" src="firestore.js?v=20260902v8"></script>
+<script type="module" src="app.js?v=20260902v8"></script>
+<script type="module" src="students-view.js?v=20260902v8"></script>
+<script type="module" src="rename-students-details.js?v=20260902v8"></script>
+<script type="module" src="fee-management-v2.js?v=20260902v8"></script>
 </body>
 </html>
